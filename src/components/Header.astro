@@ -10,16 +10,25 @@ interface Props {
   conference?: string;
   notes?: Note[];
   links: Link[];
+  logos: string[];  // 新增校标图片路径数组
 }
 
-const { title, authors, conference, notes, links } = Astro.props as Props;
+const { title, authors, conference, notes, links, logos } = Astro.props as Props;
 ---
 
 <header class="flex flex-col gap-10 items-center mb-6">
   <h1>{title}</h1>
+  <!-- 新增校标图片展示区 -->
+  <div class="flex flex-row justify-center items-center gap-12">
+    {logos.map((logo) => (
+      <a href={logo.url} target="_blank" rel="noopener noreferrer">
+        <img src={logo.src} alt="University Logo" class="h-24" />
+      </a>
+    ))}
+  </div>
   <div class="flex flex-col gap-6 items-center">
     <Authors authors={authors} />
-    {conference && <p class="text-center">{conference}</p>}
+    {conference && <p class="text-center" style="font-style: italic;">{conference}</p>}
     {notes && <Notes notes={notes} />}
     {links && <Links links={links} />}
   </div>
