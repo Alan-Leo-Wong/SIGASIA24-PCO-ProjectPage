@@ -1,9 +1,10 @@
 ---
 layout: ../layouts/Layout.astro
-title: Academic Project Page Template
-description: Simple project page template for your research paper, built with Astro and Tailwind CSS
+title: "PCO: Precision-Controllable Offset Surfaces with Sharp Features"
+description: SIGGRAPH ASIA 2024 Journal Track Paper
 favicon: favicon.svg
 thumbnail: screenshot.png
+conference: "ACM Transactions on Graphics (SIGGRAPH ASIA 2024)"
 ---
 
 import Layout from "../layouts/Layout.astro";
@@ -18,8 +19,21 @@ import TwoColumns from "../components/TwoColumns.astro";
 import YouTubeVideo from "../components/YouTubeVideo.astro";
 import LaTeX from "../components/LaTeX.astro";
 
-import outside from "../assets/outside.mp4";
-import transformer from "../assets/transformer.webp";
+import outside from "../assets/PCO_fast_forward.mp4";
+import teaser from "../assets/teaser.png";
+import offset_intro from "../assets/offset_intro.png";
+import insight from "../assets/insight.png";
+import pipeline from "../assets/pipeline.png";
+import gallery from "../assets/gallery.png";
+import datasets_1 from "../assets/dataset_1.png";
+import datasets_2 from "../assets/dataset_2.png";
+import robustness from "../assets/robustness.png";
+import offset_dis from "../assets/offset_distance.png";
+import cad_twisted from "../assets/cad_twisted.png";
+import large_scan from "../assets/large_scan.png";
+import bunny_simp from "../assets/bunny_simp.png";
+import head_simp from "../assets/head_simp.png";
+import morphology from "../assets/morphology.png";
 import Splat from "../components/Splat.tsx"
 
 import CodeBlock from "../components/CodeBlock.astro";
@@ -29,125 +43,207 @@ export const components = {pre: CodeBlock}
   title={frontmatter.title}
   authors={[
     {
-      name: "Roman Hauksson",
-      url: "https://roman.technology",
-      institution: "Independent",
-      notes: ["*", "†"],
+      name: "Lei Wang",
+      url: "https://alan-leo-wong.github.io/",
+      institution: "Shandong University"
     },
     {
-      name: "Author Two",
-      institution: "Institution Two",
-      notes: ["*", "†"],
+      name: "Xudong Wang",
+      url: "#",
+      institution: "Shandong University"
     },
     {
-      name: "Author Three",
-      institution: "Institution Three",
+      name: "Pengfei Wang",
+      url: "https://pengfei.me/",
+      institution: "Shandong University"
+    },
+    {
+      name: "Shuangmin Chen",
+      url: "#",
+      institution: "Qingdao University of Science and Technology",
       notes: ["†"],
     },
     {
-      name: "Author Four",
-      institution: "Institution Four",
+      name: "Shiqing Xin",
+      url: "https://irc.cs.sdu.edu.cn/~shiqing/index.html",
+      institution: "Shandong University"
+    },
+    {
+      name: "Jiong Guo",
+      url: "https://scholar.google.com.sg/citations?user=4rjuV8YAAAAJ&hl=en",
+      institution: "Shandong University"
+    },
+    {
+      name: "Wenping Wang",
+      url: "https://engineering.tamu.edu/cse/profiles/Wang-Wenping.html",
+      institution: "Texas A&M University"
+    },
+    {
+      name: "Changhe Tu",
+      url: "https://irc.cs.sdu.edu.cn/~chtu/index.html",
+      institution: "Shandong University",
     },
   ]}
-  conference="Conference Name"
+  conference={frontmatter.conference}
   notes={[
     {
-      symbol: "*",
-      text: "author note one",
-    },
-    {
       symbol: "†",
-      text: "author note two",
+      text: "Corresponding Author",
     },
   ]}
   links={[
     {
-      name: "Paper",
+      name: "Paper (54.3Mb)",
       url: "",
       icon: "fa-solid:file-pdf",
     },
     {
-      name: "Code",
-      url: "https://github.com/RomanHauksson/academic-project-astro-template",
-      icon: "mdi:github",
+      name: "Paper - Low res (4.78Mb)",
+      url: "",
+      icon: "fa-solid:file-pdf",
     },
     {
-      name: "arXiv",
+      name: "Supplementary Material (35.2Mb)",
       url: "",
-      icon: "academicons:arxiv",
+      icon: "fa-solid:file-pdf",
     },
+    {
+      name: "Code - Coming soon",
+      url: "",
+      icon: "mdi:github",
+    }
   ]}
   />
 
-<Video source={outside} />
-
 <HighlightedSection>
+
+<Figure>
+    <Image source={teaser} altText="Teaser figure." />
+</Figure>
 
 ## Abstract
 
-This is a live demo for a template you can use to create a simple project page for your research paper. See the code for the template and instructions on how to use it yourself [here](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind CSS](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+Surface offsetting is a crucial operation in digital geometry processing and computer-aided design, where an offset is defined as an iso-value surface of the distance field. A challenge emerges as even smooth surfaces can exhibit sharp features in their offsets due to the non-differentiable characteristics of the underlying distance field.
+Prevailing approaches to the offsetting problem involve approximating the distance field and then extracting the iso-surface. However, even with dual contouring (DC), there is a risk of degrading sharp feature points/lines due to the inaccurate discretization of the distance field. This issue is exacerbated when the input is a piecewise-linear triangle mesh.
+This study is inspired by the observation that a triangle-based distance field, unlike the complex distance field rooted at the entire surface, remains smooth across the entire 3D space except at the triangle itself. With a polygonal surface comprising <LaTeX inline formula="n" /> triangles, the final distance field for accommodating the offset surface is determined by minimizing these <LaTeX inline formula="n" /> triangle-based distance fields.
+In implementation, our approach starts by tetrahedralizing the space around the offset surface, enabling a tetrahedron-wise linear approximation for each triangle-based distance field. The final offset surface within a tetrahedral range can be traced by slicing the tetrahedron with planes.
+As illustrated in the teaser figure, a key advantage of our algorithm is its ability to precisely preserve sharp features.
+Furthermore, this paper addresses the problem of simplifying the offset surface’s complexity while preserving sharp features, formulating it as a maximal-clique problem.
 
 </HighlightedSection>
 
-## Figures
+## Fast Forward
 
-Use the figure component to display images, videos, equations, or any other element, with an optional caption.
+<Video source={outside} />
 
-<Figure
-    caption="Diagram of the transformer deep learning architecture."
-  >
-    <Image source={transformer} altText="Diagram of the transformer deep learning architecture." />
+## What is this paper about?
+The offset at a distance can be considered a specific case of the Minkowski operation, widely explored in mathematical morphology. 
+This process computes the offset surface by allowing a sphere to traverse with its center lying on the surface: 
+<Figure>
+    <Image source={offset_intro} altText="Offset definition." />
+</Figure>
+It can be observed that even smooth surfaces may exhibit sharp features in their offsets due to the non-differential characteristics of the underlying distance field.
+So we introduce the **PCO** for generating offset surface with sharp features. 
+
+The research presented in this paper is driven by an insightful observation: 
+A distance field derived from individual triangles, as opposed to one given by the entire surface, remains smooth throughout the 3D space, 
+with irregularities appearing only at the triangles themselves. 
+This inherent smoothness of a triangle-based distance field enables us to divide the space into small units and apply a linear approximation within each unit. 
+It is important to highlight that this piecewise linear approximation method is effective provided that the units are sufficiently small.
+Based on the fact that the actual distance field of the entire surface, necessary for creating the offset, 
+can be constructed by minimizing across all the triangle-based distance fields.
+In contrast, traditional isosurface extraction methods, which treat the boundary curve collectively, often struggle to accurately represent sharp features.
+<Figure caption="left: traditional isosurface extraction methods, right: our method. Feature points are highlighted in windows.">
+    <Image source={insight} altText="insight" />
 </Figure>
 
-## Two columns
+Moreover, we recommend merging the <LaTeX inline formula="n" /> triangles, the final distance field for accommodating the offset surface is determined by minimizing these <LaTeX inline formula="n" /> fields, tetrahedron by tetrahedron, to simplify the complexity of the offset surface while maintaining the integrity of sharp features. 
+This process can be formulated as a maximal-clique problem.
 
-Use the two columns component to display two columns of content. In this example, the first column contains a figure with a YouTube video and the second column contains a figure with a custom [React](https://react.dev/) component. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
+### Pipeline
+<Figure caption="The pipeline of our algorithm is demonstrated using an example on the fertility model (a), shrunk by 0.5\%">
+    <Image source={pipeline} altText="pipeline of our algorithm" />
+</Figure>
 
+## Some results
+
+### Gallery
+A gallery of our feature-preserving offsetting results from inputs of freeform and CAD models:
+<Figure>
+    <Image source={gallery} altText="Teaser figure." />
+</Figure>
+
+### Datasets validation
+We validate the effectiveness on extensive datasets with complex, often defect-laden meshes: **Thingi10K** and **ABC**.
+The average values of relative Chamfer distance and Hausdorff distance are generally below <LaTeX inline formula="10^{-1}" />, 
+average normal deviation values are predominantly within <LaTeX inline formula="[0^\circ, 5^\circ]" />, 
+and most N-Scores approach <LaTeX inline formula="100\%" />, with all exceeding <LaTeX inline formula="60\%" />.
+The runtime performance depends on the complexity of the input mesh, but the total time remains under <LaTeX inline formula="10^{3}" /> seconds even for meshes with millions of triangles.
 <TwoColumns>
-  <Figure slot="left" caption="Take a look at this YouTube video.">
-    <YouTubeVideo videoId="wjZofJX0v4M" />
+  <Figure slot="left" caption="Statistical results of our method on Thingi10K.">
+    <Image source={datasets_1} altText="Statistical results of our method on Thingi10K." />
   </Figure>
-  <Figure slot="right" caption="Now look at this Gaussian Splat, rendered with a React component.">
-    <Splat client:idle />
+  <Figure slot="right" caption="Statistical results of our method on a subset of ABC.">
+    <Image source={datasets_2} altText="Statistical results of our method on a subset of ABC." />
   </Figure>
 </TwoColumns>
 
-## Heading levels
+### Robustness validation
+Our method efficiently recovers sharp features, as indicated by the red solid lines in~(a).
+Additionally, our method can handle non-manifold, self-intersecting models and ensures valid output. 
+It can preserve fine details even in models with thin plates, as shown in highlighted windows in~(b) and~(c).
+<Figure>
+    <Image source={robustness} altText="Varying offset distance." />
+</Figure>
 
-Use headings to divide your content into sections.
+### Varying offset distance
+Regardless of the offset distance, our algorithm consistently produces the desired results while preserving sharp features, even when <LaTeX inline formula="\delta" /> increases significantly:
+<Figure>
+    <Image source={offset_dis} altText="Varying offset distance." />
+</Figure>
 
-### Heading 3
+### Offset comparison
+To comprehensively evaluate our algorithm, we selected several state-of-the-art approaches capable of generating offset surfaces with available implementations.
+Here, we illustrate three visual comparison results from three kinds of models: CAD models, thin-plate models, and models reconstructed from real raw large scan data.
 
-Go down a level to heading 3...
+#### CAD \& Thin-plate models
+CAD models often exhibit prominent feature lines, thus used to test the capability of preserving sharp features.
+Twisted and thin-plate models often presents challenges in preserving sharp features and correctly handling intersections when perform the offsetting process on these models.
+<Figure>
+    <Image source={cad_twisted} altText="Visual comparison results from CAD \& Thin-plate models." />
+</Figure>
 
-#### Heading 4
+#### Models reconstructed from actual raw scans
+These models always exhibit rich geometric details and have millions of faces, which presents challenges in preserving sharp features while maintaining high performance.
+<Figure>
+    <Image source={large_scan} altText="Visual comparison results from models reconstructed from actual raw scans." />
+</Figure>
 
-...and down again to heading 4.
+### Offset simplifaction
+To explore how our simplification framework affects precision control and simplification level in offset generation, we performed experiments with varying values of 
+<LaTeX inline formula="\theta" />, a hyper-parameter that regulates the similarity between two linear distance fields. 
+As <LaTeX inline formula="\theta" /> increases, a greater number of linear fields can be merged, resulting in a more simplified offset mesh.
 
-## LaTeX
+<TwoColumns>
+  <Figure slot="left" caption="Highlighted differences visualize the smoothing and simplifying effects.">
+    <Image source={bunny_simp} altText="simplifaction validation" />
+  </Figure>
+  <Figure slot="right" caption="More weak features (see highlighted windows) are eliminated when \theta becomes large.">
+    <Image source={head_simp} altText="simplifaction validation" />
+  </Figure>
+</TwoColumns>
 
-You can also add LaTeX formulas, rendered during the build process using [KaTeX](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: <LaTeX inline formula="a^2 + b^2 = c^2" />. Or, you can write them as a block:
+### Extension to Opening and Closing
+Offsetting (erosion and dilation) operations are foundational building blocks in morphology. 
+Unlike the offsetting operation, the opening and closing operations preserve the original shape while filling the overly convex or concave parts
+with a user-specified parameter. This is particularly useful in consolidating mechanical structures.
 
-<LaTeX formula="\int_a^b f(x) dx" />
-
-## Tables
-
-You can add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
-
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
+<Figure>
+    <Image source={morphology} altText="Morphology operators." />
+</Figure>
 
 ## BibTeX citation
 
 ```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
-}
+Coming soon...
 ```
